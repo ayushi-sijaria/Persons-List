@@ -8,6 +8,7 @@ const AddUser = (props) =>
 {
      const [enteredName, setEnteredName] = useState('')
      const [enteredAge, setEnteredAge] = useState('')
+     const [errorMessage, setErrorMessage] = useState('')
 
      const nameChangeHandler = (event) =>
      {
@@ -22,17 +23,36 @@ const AddUser = (props) =>
      const formSubmitHandler = (event) =>
      {
           event.preventDefault()
-          if((enteredName.trim().length > 0)&&(enteredAge.trim().length>0)&&(+enteredAge>0))
-         {
-              console.log(enteredName, enteredAge)
-              props.addUser(enteredName, enteredAge)
-              setEnteredName('')
-              setEnteredAge('')
-         }
+          if((enteredName.trim().length === 0))
+          {
+               setErrorMessage('Name cannot be blank')
+               return
+          }
+          if((enteredAge.trim().length === 0))
+          {
+               setErrorMessage('Age cannot be blank')
+               return
+          }
+          if(+enteredAge<1)
+          {
+               setErrorMessage('Invalid age')
+               return
+          }
+         
+          console.log(enteredName, enteredAge)
+          props.addUser(enteredName, enteredAge)
+          setEnteredName('')
+          setEnteredAge('')
+          }
+
+     const resetErrorHandler = () =>
+     {
+          setErrorMessage('')
      }
+
      return (
           <div>
-               <ErrorModal errorMessage='Something went wrong.'/>
+               {errorMessage && <ErrorModal errorMessage={errorMessage} resetError={resetErrorHandler}/>}
                <Card className={classes.input}>
                     <form onSubmit={formSubmitHandler}>
                     <label htmlFor='userName'>Name:</label>
