@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import './App.css';
 import AddUser from './components/Users/AddUser/AddUser'
 import UserList from './components/Users/UsersList/UsersList'
 
@@ -14,7 +13,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div>
       <AddUser addUser={addUserHandler}/>
       <UserList users={userList}/>
     </div>
